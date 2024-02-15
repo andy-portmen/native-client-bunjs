@@ -1,6 +1,6 @@
 /* global Bun */
 
-const version = '0.1.0 (BunJS)';
+const version = '0.1.1 (BunJS)';
 
 /* push */
 const writer = Bun.stdout.writer();
@@ -56,6 +56,7 @@ const message = {
       const p = Array.isArray(msg.command) ? path.join(...msg.command) : msg.command;
       const proc = Bun.spawn([p, ...msg.arguments], {
         env: process.env,
+        stderr: 'pipe',
         onExit(proc, code, signalCode, error) {
           Promise.all([
             new Response(proc.stdout).text(),
